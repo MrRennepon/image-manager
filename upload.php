@@ -22,6 +22,22 @@
 
     if ($_FILES["fileToUpload"]["size"] > 500000) {
         echo "<br>Извините, ваш файл слишком большой.";
-        $uploadPk = 0;
+        $uploadOk = 0;
+    }
+
+    if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+        && $imageFileType != "gif") {
+            echo "Извините, разрешены только файлы в формате JPG, JPEG, PNG и GIF.";
+            $uploadOk = 0;
+        }
+
+    if ($uploadOk == 0) {
+        echo " Ваш файл не был загружен.";
+    } else {
+        if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+            echo "<br>Файл " . basename($_FILES["fileToUpload"]["name"]) . " успешно загружен.";
+        } else {
+            echo "Произошла ошибка при загрузке файла";
+        }
     }
 ?>
